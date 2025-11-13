@@ -1,0 +1,16 @@
+# Data files
+*.npz
+*.fits
+*.h5
+*.hdf5
+
+# Large CSV files (keep small config CSVs)
+**/injected_flattened_lcs/
+
+# Python cache
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# OS files
+.DS_Store
