@@ -62,6 +62,9 @@ The folders are numbered in chronological order of what steps to take, and insid
 
 2. **Now, log into Geryon** and navigate into the `3_import_to_geryon` folder
 
+NOTE: Make sure to install transitleastsquares before running the pbs file. 
+Use: python3 -m pip install --user transitleastsquares
+
 3. **Run job** by running the relevant .pbs files
    ```bash
    qsub run_tls_part*.pbs
