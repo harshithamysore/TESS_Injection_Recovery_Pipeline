@@ -31,8 +31,9 @@ The folders are numbered in chronological order of what steps to take, and insid
 
 5. (Optional) To cut down the CTL sample to get the same distribution of sectors as the TOI list, run `2_optional_match_sector_lengths.ipynb`.
    - The **first cell** runs it for the CTLs, and the **second cell** runs it for the TOIs. An estimation is included for how long it will take to run all the lightcurves.
-   - The **third cell** generates the representative sample, which will have the same number of stars as the TOI list
-   - The **fourth cell** modifies the CTL stars that will be used from that point onward, including sector length in the csvs.
+   - The **third cell** shows the distribution of sectors comparison. The cut will work best if there are more CTLs than TOIs in every bin.
+   - The **fourth cell** generates the representative sample, which will have the same number of stars as the TOI list
+   - The **fifth cell** modifies the CTL stars that will be used from that point onward, including sector length in the csvs.
 ---
 
 ## Part Two: `2_injection/`
