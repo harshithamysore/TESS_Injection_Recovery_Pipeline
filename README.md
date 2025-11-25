@@ -21,14 +21,19 @@ The folders are numbered in chronological order of what steps to take, and insid
 2. **Add to the same folder** (`1_get_sample/`) a csv that contains the TIC IDs that you'd like to get a representative sample for with the relevant parameters
    - See `TOI_Mar2025_1pt5to4_R.csv` as an example
 
-3. **Make sure** that `CTL_2025April29.npz` is in the same folder as well, or from whatever date, and modify cell 8 to reflect the correct date
+3. **Make sure** that `CTL_2025April29.npz` is in the same folder as well, or from whatever date, and modify cell 8 to reflect the correct date. You can download that here: https://www.dropbox.com/scl/fi/2s3ese63a40popf3ou7a6/CTL_2025April29.npz?rlkey=yg3nu3ytbr5xz1lhsttivbkcr&dl=1 or ask Gijs Mulders for a copy. It is too large to include in Github.
 
 4. **Run the cell**, which will generate the sample and automatically add it to the relevant folders
 
 **Note:**
 - In `histogram_sample_2d.py`, in the `make_control` function, you can modify `n_targets` to get a different number of targets from the CTL. It's currently set to get 10x the number of inputted targets.
-- The default is set up to use stellar radius and tess magnitude as the parameters, but this can be changed
+- The default is set up to use stellar radius and tess magnitude as the parameters, but this can be changed. If you want a sample that is 1-1, just change the value from 10 to 1.
 
+5. (Optional) To cut down the CTL sample to get the same distribution of sectors as the TOI list, run `2_optional_match_sector_lengths.ipynb`.
+   - The **first cell** runs it for the CTLs, and the **second cell** runs it for the TOIs. An estimation is included for how long it will take to run all the lightcurves.
+   - The **third cell** shows the distribution of sectors comparison. The cut will work best if there are more CTLs than TOIs in every bin.
+   - The **fourth cell** generates the representative sample, which will have the same number of stars as the TOI list
+   - The **fifth cell** modifies the CTL stars that will be used from that point onward, including sector length in the csvs.
 ---
 
 ## Part Two: `2_injection/`
@@ -36,7 +41,7 @@ The folders are numbered in chronological order of what steps to take, and insid
 1. **Open and run** `1_output_injected_flattened_lcs_randomized_periods_radii.ipynb`. This will put the injected lightcurves into the relevant folder.
    - If you want to modify the period/radius space, you can do that towards the bottom of the cell. Otherwise, the notebook should run automatically.
    - **This can take a few hours** for ~1000 lightcurves
-   - **Be careful to only run this cell once**, because previous progress checking is not implemented. It's non-trivial since the injections are randomized in the cell. Feel free to take a stab at adding previous progress checking though!! If you have to re-run part way through, you'll have to go into `3_import_to_geryon/` and delete the existing TIC folders, or you can manually define which TICs to run again.
+   - **Previous runs check is implemented BUT,** it only checks for previously run TIC folders. Therefore, if you interrupt the cell and re-start, some folders will be incomplete, and you will need to manually delete any that do not have 42 / the desired number of files.
    - Also be aware that **you need to have an internet connection** while it's running or else the lightcurves can't be accessed.
    - **Use the last cell** to ensure that you generated the number of lightcurves that you intended before uploading to Geryon
 
@@ -61,6 +66,8 @@ The folders are numbered in chronological order of what steps to take, and insid
      ```
 
 2. **Now, log into Geryon** and navigate into the `3_import_to_geryon` folder
+   
+To install `transitleastsquares`, run:
 
 NOTE: Make sure to install transitleastsquares before running the pbs file. 
 Use: python3 -m pip install --user transitleastsquares
@@ -70,7 +77,7 @@ Use: python3 -m pip install --user transitleastsquares
    qsub run_tls_part*.pbs
    ```
 
-4. **Once the jobs are done running**, send the results back to local computer
+5. **Once the jobs are done running**, send the results back to local computer
    - Example command (in local terminal):
      ```bash
      scp -r dyaptangco@geryon2.astro.puc.cl:'/home/dyaptangco/3_import_to_geryon/tls_results_per_tic' \
@@ -87,8 +94,6 @@ Use: python3 -m pip install --user transitleastsquares
 2. **Once Geryon has finished running** and you've copied the results back to your local machine, you can open `2_heatmaps_analysis.ipynb` to see the results of the injections in heatmap form.
    - The first cell creates one map per TIC
    - The second cell creates one map per specific temperature bin
-   - The third cell adds contours
-   - The fourth cell is contour analysis
 
 ---
 
